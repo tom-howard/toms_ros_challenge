@@ -1,0 +1,6 @@
+<launch>
+  <node pkg="toms_ros_challenge" type="mystery_node1.py" name="mystery_node_1" output="screen" />
+  <node pkg="toms_ros_challenge" type="mystery_node2.py" name="mystery_node_2" output="screen" />
+  <node pkg="toms_ros_challenge" type="mystery_node3.py" name="mystery_node_3" output="screen" />
+  <node pkg="toms_ros_challenge" type="mystery_node4.py" name="mystery_node_4" output="screen" />
+</launch>
