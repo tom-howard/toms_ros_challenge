@@ -3,16 +3,15 @@
 import rospy
 from std_msgs.msg import String, Int32MultiArray
 
-
 class MysteryClass():
 
     def cb1(self, topic_data: Int32MultiArray):
         self.msg1 = str(topic_data.data)
 
-    def cb2(self, topic_data):
+    def cb2(self, topic_data: String):
         self.msg2 = topic_data.data
 
-    def cb3(self, topic_data):
+    def cb3(self, topic_data: String):
         self.msg3 = topic_data.data
 
     def __init__(self):
@@ -41,7 +40,7 @@ class MysteryClass():
     
     def main(self):
         while not self.ctrl_c:
-            self.topic_msg = self.msg1 + self.msg2 + self.msg3
+            self.topic_msg = f"My conclusion is: I can see three topics, but I've no idea what to do with them! (Need a hint: look in src...))"
             self.pub.publish(self.topic_msg)
             self.rate.sleep()
 

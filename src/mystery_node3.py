@@ -14,7 +14,7 @@ class MysteryClass():
         rospy.on_shutdown(self.shutdownhook)
 
         self.topic_msg = String()
-        self.topic_msg.data = "text"
+        self.topic_msg.data = "ratumc adecrs"
 
     def shutdownhook(self):
         self.ctrl_c = True
