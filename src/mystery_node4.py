@@ -19,11 +19,11 @@ class MysteryClass():
         self.msg2 = ""
         self.msg3 = ""
         
-        self.sub1 = rospy.Subscriber('some_nums', Int32MultiArray, self.cb1)
-        self.sub2 = rospy.Subscriber('some_chars', String, self.cb2)
-        self.sub3 = rospy.Subscriber('some_more_chars', String, self.cb3)
+        self.sub1 = rospy.Subscriber('eeny', Int32MultiArray, self.cb1)
+        self.sub2 = rospy.Subscriber('meeny', String, self.cb2)
+        self.sub3 = rospy.Subscriber('miny', String, self.cb3)
 
-        self.pub = rospy.Publisher('conclusions', String, queue_size=10)
+        self.pub = rospy.Publisher('moe', String, queue_size=10)
 
         self.name = "mystery_node4"
         rospy.init_node(self.name)
@@ -40,7 +40,8 @@ class MysteryClass():
     
     def main(self):
         while not self.ctrl_c:
-            self.topic_msg = f"My conclusion is: I can see three topics, but I've no idea what to do with them! (Need a hint: look in src...))"
+            self.topic_msg = f"If only you could see what I was printing to screen... (look in the launch file)"
+            rospy.loginfo("There's another node in 'src'!")
             self.pub.publish(self.topic_msg)
             self.rate.sleep()
 

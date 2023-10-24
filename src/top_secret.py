@@ -5,20 +5,20 @@ from std_msgs.msg import String, Int32MultiArray
 
 class topSecret():
 
-    def cb1(self, topic_data: Int32MultiArray):
+    def numbers_callback(self, topic_data: Int32MultiArray):
         self.seq = list(topic_data.data)
-        self.got_seq = True
+        self.got_numbers = True
 
-    def cb2(self, topic_data: String):
+    def letters_callback(self, topic_data: String):
         self.msg = topic_data.data
-        self.got_chars = True
+        self.got_letters = True
 
     def __init__(self):
         self.msg = ""
         self.seq = []
                 
-        self.sub1 = rospy.Subscriber('some_nums', Int32MultiArray, self.cb1)
-        self.sub3 = rospy.Subscriber('some_more_chars', String, self.cb2)
+        self.some_numbers = rospy.Subscriber('topic_a', Int32MultiArray, self.numbers_callback)
+        self.some_letters = rospy.Subscriber('topic_b', String, self.letters_callback)
 
         self.name = "code_breaker"
         rospy.init_node(self.name)
@@ -43,18 +43,18 @@ class topSecret():
 
     def main(self):
         while not self.ctrl_c:
-            self.got_seq = False
-            self.got_chars = False
-            print("Thinking...")
+            self.got_numbers = False
+            self.got_letters = False
+            print("OK...")
             self.rate.sleep()
-            if self.got_chars and self.got_seq:
+            if self.got_letters and self.got_numbers:
                 self.code_breaker(self.msg, self.seq)
-            elif self.got_chars and not self.got_seq:
-                print("I need some_nums...")
-            elif not self.got_chars and self.got_seq:
-                print("I need some_chars...")
+            elif self.got_letters and not self.got_numbers:
+                print("I need some numbers...")
+            elif not self.got_letters and self.got_numbers:
+                print("I need some letters...")
             else:
-                print("I need some_chars and some_nums...")
+                print("I need some letters and some numbers...")
 
 if __name__ == "__main__":
     node = topSecret()

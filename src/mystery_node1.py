@@ -5,7 +5,7 @@ from std_msgs.msg import Int32MultiArray
 
 class MysteryClass():
     def __init__(self):
-        self.pub = rospy.Publisher('some_nums', Int32MultiArray, queue_size=10)
+        self.pub = rospy.Publisher('eeny', Int32MultiArray, queue_size=10)
         self.name = "mystery_node1"
         rospy.init_node(self.name)
         self.rate = rospy.Rate(1)
@@ -21,17 +21,12 @@ class MysteryClass():
         self.ctrl_c = True
         print(f"{self.name} closed.")
     
-    def timeout(self):
-        print(f"'{self.name}' got bored and stopped running!")
-        self.ctrl_c = True
-            
     def main(self):
         timestamp = rospy.get_time()
         while not self.ctrl_c:
             self.pub.publish(self.topic_msg)
             if rospy.get_time() > timestamp + 50:
                 timestamp = rospy.get_time()
-                self.timeout()
             self.rate.sleep()
 
 if __name__ == "__main__":

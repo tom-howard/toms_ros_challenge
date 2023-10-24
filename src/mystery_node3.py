@@ -5,7 +5,7 @@ from std_msgs.msg import String
 
 class MysteryClass():
     def __init__(self):
-        self.pub = rospy.Publisher('some_chars', String, queue_size=10)
+        self.pub = rospy.Publisher('miny', String, queue_size=10)
         self.name = "mystery_node3"
         rospy.init_node(self.name)
         self.rate = rospy.Rate(1)
