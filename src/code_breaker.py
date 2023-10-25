@@ -27,26 +27,13 @@ class topSecret():
         self.ctrl_c = False
         rospy.on_shutdown(self.shutdownhook)
 
-        self.topic_msg = String()
+        self.display_msg = True
 
     def shutdownhook(self):
         self.ctrl_c = True
-    
-    def code_breaker(self, msg, sequence):
-        print("Wait a sec...")
-        untangled_msg = ""
-        for i in sequence:
-            untangled_msg = untangled_msg + msg[i-1]
-        rospy.sleep(2)
-        print(f"Bingo! The secret message is '{untangled_msg.upper()}'")
-        self.ctrl_c = True
 
-    def main(self):
-        while not self.ctrl_c:
-            self.got_numbers = False
-            self.got_letters = False
-            print("OK...")
-            self.rate.sleep()
+    def print_hint(self):
+        if self.display_msg:
             if self.got_letters and self.got_numbers:
                 self.code_breaker(self.msg, self.seq)
             elif self.got_letters and not self.got_numbers:
@@ -55,6 +42,25 @@ class topSecret():
                 print("I need some letters...")
             else:
                 print("I need some letters and some numbers...")
+            self.display_msg = False
+    
+    def code_breaker(self, msg, sequence):
+        print("Wait a sec...")
+        untangled_msg = ""
+        for i in sequence:
+            untangled_msg = untangled_msg + msg[i-1]
+        rospy.sleep(2)
+        print(f"Bingo! The secret message is '{untangled_msg.upper()}'")
+
+    def main(self):
+        while not self.ctrl_c:
+            self.got_numbers = False
+            self.got_letters = False
+            if self.display_msg:
+                print("OK...")
+            self.rate.sleep()
+            self.print_hint()
+            
 
 if __name__ == "__main__":
     node = topSecret()
